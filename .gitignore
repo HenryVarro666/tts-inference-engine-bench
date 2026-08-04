@@ -1,0 +1,17 @@
+# Heavy artifacts — not committed
+backbone_qwen2/
+trt_ckpt/
+trt_engine/
+trtllm_ws_*/
+*.wav
+*.log
+nohup*.out
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+*.egg-info/
+
+# OS
+.DS_Store

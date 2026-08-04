@@ -1,0 +1,14 @@
+{
+  "engine": "vllm_0.17.1",
+  "model": "dots-tts qwen2 backbone 1.543B bf16",
+  "P": 64,
+  "G": 48,
+  "runs_seconds": [
+    0.10749266995117068,
+    0.10601849900558591,
+    0.10609735699836165
+  ],
+  "best_seconds": 0.106,
+  "tokens_per_sec": 452.8,
+  "per_token_ms": 2.209
+}

@@ -1,0 +1,17 @@
+{
+  "model": "dots-tts (rednote-hilab/dots.tts-base), full pipeline, eager, bf16, 1xH100 NVL",
+  "input": "single utterance synthesizing 7.68 s of audio (368640 samples @ 48000 Hz)",
+  "ode_num_steps": 10,
+  "audio_patches": 48,
+  "total_elapsed_seconds": 27.363,
+  "audio_seconds": 7.680,
+  "overall_rtf": 3.563,
+  "stages": [
+    {"stage": "FM (flow-matching DiT / ODE)", "seconds": 18.5612, "count": 48, "rtf": 2.4168, "share_pct": 67.8},
+    {"stage": "LLM backbone (Qwen2 AR decode)", "seconds": 5.6865, "count": 49, "rtf": 0.7404, "share_pct": 20.8},
+    {"stage": "patch_encoder", "seconds": 1.8608, "count": 48, "rtf": 0.2423, "share_pct": 6.8},
+    {"stage": "latent_decoder", "seconds": 0.4506, "count": 1, "rtf": 0.0587, "share_pct": 1.6},
+    {"stage": "speaker/vocoder/prefill/misc", "seconds": 0.8, "count": null, "rtf": null, "share_pct": 3.0}
+  ],
+  "source": "results/phase0_endtoend.log (dots-tts built-in InferenceProfiler)"
+}

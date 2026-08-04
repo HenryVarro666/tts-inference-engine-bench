@@ -1,0 +1,11 @@
+{
+  "engine": "eager_torch",
+  "model": "dots-tts qwen2 backbone 1.543B bf16",
+  "P": 64,
+  "G": 48,
+  "prefill_seconds": 1.4563,
+  "decode_seconds": 2.2421,
+  "decode_per_token_ms": 46.711,
+  "total_generate_seconds": 3.6984,
+  "tokens_per_sec": 21.4
+}

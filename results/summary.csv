@@ -1,0 +1,4 @@
+category,engine,total_seconds,per_token_ms,tokens_per_sec,speedup_vs_eager
+llm_backbone,eager_pytorch,3.698,46.71,21.4,1.0
+llm_backbone,tensorrt_llm_1.3_pytorch_backend,0.226,4.71,212.5,9.9
+llm_backbone,vllm_0.17.1,0.106,2.21,452.8,21.2
