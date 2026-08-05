@@ -98,7 +98,7 @@ Raw data in [`results/`](results/). 原始数据在 `results/`。
 - [`docs/01_background.md`](docs/01_background.md) — why compare; TTS architecture; engine positioning 动机 / TTS 架构 / 引擎定位
 - [`docs/02_methodology.md`](docs/02_methodology.md) — experiment design, fairness, environment 实验设计 / 公平性 / 环境
 - [`docs/03_results.md`](docs/03_results.md) — full tables + end-to-end breakdown 全量表 + 端到端拆分
-- [`docs/04_analysis.md`](docs/04_analysis.md) — interpretation, caveats, guidance 解读 / 边界 / 生产建议
+- [`docs/04_analysis.md`](docs/04_analysis.md) — interpretation, caveats, key lessons, industry applications 解读 / 边界 / 关键收获 / 行业应用
 - [`docs/05_reproduction.md`](docs/05_reproduction.md) — exact steps + implementation gotchas 复现步骤 + 踩坑记录
 
 ## 6. License 许可
