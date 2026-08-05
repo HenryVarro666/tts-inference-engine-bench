@@ -93,7 +93,47 @@ Raw data in [`results/`](results/). 原始数据在 `results/`。
 
 ---
 
-## 5. Docs 文档
+## 5. Key takeaways & industry applications 关键收获与行业应用
+
+> 这些实验中的结论不只是"哪个引擎快"，而是可迁移到生产 / 复模型上的判断框架。下面是四层收获与六条行业落地建议（详版见 [docs/04_analysis.md](docs/04_analysis.md)）。
+
+**Key lessons 关键收获**
+
+1. **Benchmark granularity must match the architecture — a component win is not a system win.** "vLLM beats TRT-LLM 2×" holds only for the LLM layer; diffusion owns ~68% of TTS latency, so the end-to-end gain is only ~20%. Isolate the architectural unit before declaring a winner.
+   **基准粒度须匹配架构——组件胜利 ≠ 系统胜利。** "vLLM 赢 2×"只在 LLM 层成立；扩散占 ~68% 延迟，端到端只降 ~20%。
+
+2. **Measure the latency budget before optimizing.** The end-to-end split is the highest-value output — it refutes the intuitive "faster LLM engine → faster TTS". Decide by *where the time goes*, not *which engine is fastest*.
+   **先测延迟预算再谈优化。** 端到端拆分是最高价值产出，推翻"引擎更快→TTS 更快"直觉；按"时间花在哪"决策，而非"哪个引擎快"。
+
+3. **Tooling stacks are fluid and names are ambiguous.** "TensorRT" (a graph compiler) and "TensorRT-LLM" (a framework whose 1.3 default is a PyTorch backend) are different; the compiled-engine path was removed. Always pin version + backend + hardware + batch + precision when quoting a benchmark.
+   **工具栈流动、命名有歧义。** TensorRT(图编译器) vs TensorRT-LLM(1.3 默认 PyTorch backend、编译路径已移除)是两回事；引用基准必钉死 版本+backend+硬件+batch+精度。
+
+4. **The leverage generalizes.** `value of an LLM serving engine ∝ the LLM's share of end-to-end cost` — ≈100% for pure-AR TTS, ≈21% for diffusion TTS.
+   **杠杆可一般化。** `LLM 引擎价值 ∝ LLM 占端到端成本的比例`——纯 AR ≈100%，diffusion ≈21%。
+
+**Industry applications 行业落地建议**
+
+1. **Make latency-budget / stage-ownership profiling a standard practice** — generate a per-stage RTF table (profiler / nsys / CUDA events) before choosing serving infrastructure; report *where time is spent*, not *which engine is fastest*.
+   **把延迟预算/阶段归属分析立为工程惯例**——选基建前先出一份每阶段 RTF 表（profiler/nsys/CUDA events）；口径用"时间花在哪"而非"哪个引擎快"。
+
+2. **Choose engines per stage, not by brand.** LLM serving engine (vLLM / TRT-LLM) for the AR stage + a dedicated DiT / vocoder path (ONNX / TensorRT / torch.compile / Triton). The highest-leverage diffusion lever is the **ODE**: fewer `num_steps` via distillation, batch the ODE across patches.
+   **按阶段选引擎，不按品牌。** LLM 层用 vLLM/TRT-LLM，DiT/vocoder 层单独走 ONNX/TensorRT/compile/Triton。扩散层最高杠杆是 **ODE**：蒸馏降步数、跨 patch 批处理。
+
+3. **When diffusion-bound, model-level levers beat engine-level ones** — step distillation, a cheaper/faster vocoder, **streaming / chunked synthesis** to cut time-to-first-audio (TTFA), and data-side levers (shorter, cleaner utterances).
+   **扩散受限时，模型级杠杆>引擎级**——步数蒸馏、更快 vocoder、**流式/分块合成**压低首音频延迟(TTFA)、数据侧（更短更干净的句子）。
+
+4. **For real-time speech / interpretation, target e2e RTF < 1 and bounded TTFA.** Here the LLM is already RTF 0.74 even eager (sub-realtime); the *wall* is diffusion at RTF 2.4 — attack the diffusion/acoustic stage and streaming, not another LLM server.
+   **对实时口译，目标 e2e RTF<1 + 可控 TTFA。** 这里 LLM 层 eager 已 RTF 0.74（快于实时），真正的墙是扩散 RTF 2.4——主攻扩散/声学 + 流式，而非再换 LLM server。
+
+5. **Production benchmark discipline** — pin version + backend + GPU + batch + dtype, keep raw runs, re-benchmark at your real concurrency/model size, and keep one **latency-budget document** as the source of truth.
+   **生产基准纪律**——钉死版本/backend/GPU/batch/dtype、保留 raw runs、在真实并发/模型规模重测、维护一份 **latency-budget 文档**当唯一权威。
+
+6. **Data teams have real but indirect leverage on latency** — via shorter/cleaner utterances, speaker-disjoint splits, and **RTF regression tests on a fixed eval set**. A measured latency split is the hard evidence for "invest in diffusion + eval data, not another LLM engine".
+   **数据岗位对延迟有间接但真实的杠杆**——更短更干净的 utterance、speaker-disjoint 切分、**固定评测集上的 RTF 回归**；一张测出来的拆分表就是论证"该投扩散+评测数据，而非再投 LLM 引擎"的硬证据。
+
+---
+
+## 6. Docs 文档
 
 - [`docs/01_background.md`](docs/01_background.md) — why compare; TTS architecture; engine positioning 动机 / TTS 架构 / 引擎定位
 - [`docs/02_methodology.md`](docs/02_methodology.md) — experiment design, fairness, environment 实验设计 / 公平性 / 环境
@@ -101,7 +141,7 @@ Raw data in [`results/`](results/). 原始数据在 `results/`。
 - [`docs/04_analysis.md`](docs/04_analysis.md) — interpretation, caveats, key lessons, industry applications 解读 / 边界 / 关键收获 / 行业应用
 - [`docs/05_reproduction.md`](docs/05_reproduction.md) — exact steps + implementation gotchas 复现步骤 + 踩坑记录
 
-## 6. License 许可
+## 7. License 许可
 
 MIT. Model/engine licenses are the model owners' own (dot-tts / NVIDIA TRT-LLM as shipped)。
 
