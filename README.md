@@ -25,6 +25,20 @@ A reproducible benchmark comparing three inference paths for the **autoregressiv
 
 ---
 
+<!-- problem-framing:start -->
+
+## Problem and evidence
+
+> **Under identical model, workload and timing definitions, how much does changing the autoregressive serving engine improve complete TTS latency rather than only backbone token throughput?**
+
+**Why it matters:** An isolated component speedup can overstate the benefit users hear. Engine selection should follow measured end-to-end costs and quality constraints.
+
+**Central tension:** Highly optimized decoding may accelerate one stage while acoustic generation, initialization or batching remains dominant. Warmup, token-count denominators and aggregation choices can also create apparent engine differences.
+
+[Full problem and verification plan](PROBLEM.md)
+
+<!-- problem-framing:end -->
+
 ## 1. Results 结果
 
 Same workload across all three engines: **prefill 64 tokens + 48 autoregressive tokens**, measured post-warmup, **bf16, single H100 NVL, batch=1**. 三引擎同负载（prefill 64 + 自回归 48 token，warmup 后计时，bf16，单卡 H100 NVL，batch=1）。
