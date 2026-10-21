@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960" role="img" aria-labelledby="title desc"><title id="title">TTS-INFERENCE-ENGINE-BENCH</title><desc id="desc">A faster engine isn&#x27;t a faster TTS. vLLM vs TensorRT-LLM vs eager on a multi-stage TTS model&#x27;s LLM backbone.</desc><defs><linearGradient id="paper" x2="1" y2="1"><stop stop-color="#F7F9FC"/><stop offset="1" stop-color="#EFF3F7"/></linearGradient></defs><rect width="1600" height="960" fill="url(#paper)"/><g font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<rect x="0" y="0" width="1600" height="9" rx="0" fill="#3157A4" stroke="none"/>
+<text x="64" y="66" font-size="20" fill="#172837" font-weight="700" letter-spacing="2" data-maxx="900">TTS-INFERENCE-ENGINE-BENCH</text>
+<text x="1536" y="66" font-size="16" fill="#3157A4" font-weight="600" letter-spacing="1" text-anchor="end">INFERENCE BENCHMARK / H100</text>
+<text x="60" y="167" font-size="72" fill="#142638" font-weight="500" data-maxx="1540">A faster engine isn&#x27;t a faster TTS.</text>
+<text x="64" y="221" font-size="27" fill="#344C5F" font-weight="400" data-maxx="1536">vLLM vs TensorRT-LLM vs eager on a multi-stage TTS model&#x27;s LLM backbone.</text>
+<text x="64" y="262" font-size="20" fill="#697988" font-weight="400" data-maxx="1536">A reproducible single-H100 benchmark, plus the end-to-end latency budget it sits in.</text>
+<rect x="64" y="323" width="344" height="272" rx="20" fill="#FFFFFF" stroke="#DCE4EB"/>
+<rect x="88" y="349" width="44" height="5" rx="2" fill="#3157A4" stroke="none"/>
+<text x="88" y="393" font-size="17" fill="#3157A4" font-weight="700" letter-spacing="1.4" data-maxx="394">01 / EXPORT</text>
+<text x="88" y="441" font-size="28" fill="#172C3C" font-weight="600" data-maxx="394">Isolate the backbone</text>
+<text x="88" y="485" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="394">dots-tts Qwen2 backbone, 1.54B</text>
+<text x="88" y="517" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="394">Exported as a standalone model</text>
+<text x="88" y="549" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="394">Same unit for every engine</text>
+<path d="M416 458h16m-6-6 6 6-6 6" fill="none" stroke="#3157A4" stroke-width="2"/>
+<rect x="440" y="323" width="344" height="272" rx="20" fill="#FFFFFF" stroke="#DCE4EB"/>
+<rect x="464" y="349" width="44" height="5" rx="2" fill="#3157A4" stroke="none"/>
+<text x="464" y="393" font-size="17" fill="#3157A4" font-weight="700" letter-spacing="1.4" data-maxx="770">02 / RUN</text>
+<text x="464" y="441" font-size="28" fill="#172C3C" font-weight="600" data-maxx="770">Three engines</text>
+<text x="464" y="485" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="770">eager PyTorch (StaticCache)</text>
+<text x="464" y="517" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="770">vLLM 0.17.1</text>
+<text x="464" y="549" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="770">TensorRT-LLM 1.3.0</text>
+<path d="M792 458h16m-6-6 6 6-6 6" fill="none" stroke="#3157A4" stroke-width="2"/>
+<rect x="816" y="323" width="344" height="272" rx="20" fill="#FFFFFF" stroke="#DCE4EB"/>
+<rect x="840" y="349" width="44" height="5" rx="2" fill="#3157A4" stroke="none"/>
+<text x="840" y="393" font-size="17" fill="#3157A4" font-weight="700" letter-spacing="1.4" data-maxx="1146">03 / MEASURE</text>
+<text x="840" y="441" font-size="28" fill="#172C3C" font-weight="600" data-maxx="1146">One workload</text>
+<text x="840" y="485" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="1146">Prefill 64 + 48 decode tokens</text>
+<text x="840" y="517" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="1146">bf16, batch 1, after warm-up</text>
+<text x="840" y="549" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="1146">Raw runs kept in results/</text>
+<path d="M1168 458h16m-6-6 6 6-6 6" fill="none" stroke="#3157A4" stroke-width="2"/>
+<rect x="1192" y="323" width="344" height="272" rx="20" fill="#FFFFFF" stroke="#DCE4EB"/>
+<rect x="1216" y="349" width="44" height="5" rx="2" fill="#3157A4" stroke="none"/>
+<text x="1216" y="393" font-size="17" fill="#3157A4" font-weight="700" letter-spacing="1.4" data-maxx="1522">04 / ATTRIBUTE</text>
+<text x="1216" y="441" font-size="28" fill="#172C3C" font-weight="600" data-maxx="1522">End-to-end split</text>
+<text x="1216" y="485" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="1522">Latency per TTS stage</text>
+<text x="1216" y="517" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="1522">Flow-matching DiT vs LLM</text>
+<text x="1216" y="549" font-size="18" fill="#5C6D7B" font-weight="400" data-maxx="1522">What an engine can change</text>
+<rect x="64" y="635" width="470" height="211" rx="18" fill="#E0E8F6" stroke="none"/>
+<text x="88" y="675" font-size="15" fill="#3157A4" font-weight="700" letter-spacing="1.2" data-maxx="516">THROUGHPUT</text>
+<text x="88" y="722" font-size="24" fill="#193346" font-weight="600" data-maxx="516">vLLM: 453 tokens/s</text>
+<text x="88" y="765" font-size="18" fill="#536777" font-weight="400" data-maxx="516">2.1× TensorRT-LLM (213), 21× eager (21).</text>
+<text x="88" y="795" font-size="18" fill="#536777" font-weight="400" data-maxx="516">Single H100 NVL, batch 1, bf16.</text>
+<rect x="565" y="635" width="470" height="211" rx="18" fill="#E8EDF3" stroke="none"/>
+<text x="589" y="675" font-size="15" fill="#3157A4" font-weight="700" letter-spacing="1.2" data-maxx="1017">LATENCY BUDGET</text>
+<text x="589" y="722" font-size="24" fill="#193346" font-weight="600" data-maxx="1017">The LLM is 21% of TTS time</text>
+<text x="589" y="765" font-size="18" fill="#536777" font-weight="400" data-maxx="1017">Flow-matching DiT takes 68%.</text>
+<text x="589" y="795" font-size="18" fill="#536777" font-weight="400" data-maxx="1017">Swapping engines saves ~20% end to end.</text>
+<rect x="1066" y="635" width="470" height="211" rx="18" fill="#E8EDF3" stroke="none"/>
+<text x="1090" y="675" font-size="15" fill="#3157A4" font-weight="700" letter-spacing="1.2" data-maxx="1518">FINDING</text>
+<text x="1090" y="722" font-size="24" fill="#193346" font-weight="600" data-maxx="1518">TensorRT-LLM 1.3 has no build step</text>
+<text x="1090" y="765" font-size="18" fill="#536777" font-weight="400" data-maxx="1518">No trtllm-build; it runs a PyTorch backend.</text>
+<text x="1090" y="795" font-size="18" fill="#536777" font-weight="400" data-maxx="1518">Compiled engines need the 1.2.x toolchain.</text>
+<path d="M64 888h1472" stroke="#CED9E3"/>
+<text x="64" y="923" font-size="17" fill="#647788" font-weight="400" data-maxx="1536">MEASURED ON 2× H100 NVL  /  Scripts, raw results and the full analysis are in this repository.</text>
+</g></svg>

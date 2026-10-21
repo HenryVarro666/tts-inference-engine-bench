@@ -1,6 +1,19 @@
+<div align="center">
+
 # vLLM vs TensorRT-LLM on a TTS Model's LLM Backbone
 
-**中文标题：在 TTS 模型 LLM 主干上对比 vLLM / TensorRT-LLM / eager 的推理性能**
+**A faster LLM engine isn't a faster TTS: a component benchmark and the end-to-end budget it sits in.**
+
+在 TTS 模型 LLM 主干上对比 vLLM / TensorRT-LLM / eager 的推理性能
+
+![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)
+![GPU](https://img.shields.io/badge/GPU-H100%20NVL-76B900?logo=nvidia&logoColor=white)
+![license](https://img.shields.io/badge/license-MIT-3DA639)
+[![homepage](https://img.shields.io/badge/homepage-ccao2679.com-555555)](https://www.ccao2679.com/research/#tts-inference-engine-bench)
+
+<img src="docs/figures/overview.png" alt="Overview poster: vLLM 453 tok/s vs TensorRT-LLM 213 and eager 21; the LLM is 21% of end-to-end TTS latency" width="100%">
+
+</div>
 
 A reproducible benchmark comparing three inference paths for the **autoregressive LLM backbone of a modern multi-stage TTS model** on NVIDIA H100: **eager PyTorch**, **vLLM 0.17.1**, and **TensorRT-LLM 1.3.0**.
 
