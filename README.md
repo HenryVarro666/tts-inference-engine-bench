@@ -2,6 +2,13 @@
 
 **中文标题：在 TTS 模型 LLM 主干上对比 vLLM / TensorRT-LLM / eager 的推理性能**
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/overview-dark.svg">
+    <img src="docs/overview-light.svg" alt="Overview: vLLM reaches 453 tok/s vs 213 for TensorRT-LLM and 21 for eager, but the LLM is only 21% of end-to-end TTS latency" width="560">
+  </picture>
+</p>
+
 A reproducible benchmark comparing three inference paths for the **autoregressive LLM backbone of a modern multi-stage TTS model** on NVIDIA H100: **eager PyTorch**, **vLLM 0.17.1**, and **TensorRT-LLM 1.3.0**.
 
 > 中文速读（TL;DR）：
