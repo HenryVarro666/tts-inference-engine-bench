@@ -72,7 +72,7 @@ The export path is the head-to-head benchmark: all three scripts run the same ex
 
 ## 1. Results 结果
 
-Same workload across all three engines: **prefill 64 tokens + 48 autoregressive tokens**, measured post-warmup, **bf16, single H100 NVL, batch=1**. 三引擎同负载（prefill 64 + 自回归 48 token，warmup 后计时，bf16，单卡 H100 NVL，batch=1）。
+Same workload across all three engines: **prefill 64 tokens + 48 autoregressive tokens**, **bf16, single H100 NVL, batch=1**. 三引擎同负载（prefill 64 + 自回归 48 token，bf16，单卡 H100 NVL，batch=1）。
 
 | Engine 引擎 | total (s) | per-token (ms) | tokens/s | vs eager |
 |---|---|---|---|---|
@@ -82,6 +82,8 @@ Same workload across all three engines: **prefill 64 tokens + 48 autoregressive 
 
 > vLLM is ~2.1× faster than TensorRT-LLM on this small (1.5B) backbone at batch=1; both are an order of magnitude faster than eager.
 > 在 batch=1 的 1.5B 小模型上 vLLM 约快 TRT-LLM 2.1×；两者都比 eager 快一个数量级。
+
+> **Measurement notes.** vLLM and TensorRT-LLM are warmed up once and timed best-of-3; `scripts/bench_eager.py` runs a single timed pass without warmup. Eager tokens/s is 48 tokens over the decode loop only, while vLLM and TensorRT-LLM tokens/s is tokens over the whole `generate()` call, prefill included, so the "vs eager" column compares slightly different quantities. On total time the ratios are 16.4× (TensorRT-LLM) and 34.9× (vLLM). A rerun with a warmed-up, best-of-3 eager baseline is pending.
 
 ### End-to-end context 端到端延迟拆分（为什么 LLM 层不是瓶颈）
 

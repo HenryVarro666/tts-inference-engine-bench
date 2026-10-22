@@ -72,7 +72,7 @@ flowchart LR
 
 ## 1. 结果
 
-三个引擎使用相同负载：**prefill 64 token + 自回归生成 48 token**，warmup 后计时，**bf16，单卡 H100 NVL，batch=1**。
+三个引擎使用相同负载：**prefill 64 token + 自回归生成 48 token**，**bf16，单卡 H100 NVL，batch=1**。
 
 | 引擎 | 总耗时 (s) | 每 token (ms) | tokens/s | 相对 eager |
 |---|---|---|---|---|
@@ -81,6 +81,8 @@ flowchart LR
 | **vLLM 0.17.1** | **0.106** | **2.21** | **452.8** | **21.2×** |
 
 > 在 batch=1 的 1.5B 小模型上，vLLM 比 TensorRT-LLM 快约 2.1×；两者都比 eager 快一个数量级。
+
+> **测量说明。** vLLM 和 TensorRT-LLM 先预热一次，再取 3 次中的最好成绩；`scripts/bench_eager.py` 只计时一次，没有预热。eager 的 tokens/s 是 48 个 token 除以解码循环的时间，而 vLLM 和 TensorRT-LLM 的 tokens/s 是 token 数除以整个 `generate()` 调用的时间（含 prefill），所以「相对 eager」一列比较的量并不完全相同。按总耗时计算，倍数为 16.4×（TensorRT-LLM）和 34.9×（vLLM）。用预热后、取 3 次最好成绩的 eager 基线重测，尚待进行。
 
 ### 端到端延迟拆分（为什么 LLM 层不是瓶颈）
 
