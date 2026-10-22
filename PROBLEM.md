@@ -11,3 +11,5 @@
 **Decisive verification:** Freeze weights, precision, prompt/output lengths, seeds and hardware. Use the same warmup and repeated-run protocol for every engine, retain all trials and failures, and report consistent throughput denominators and latency distributions. Separately replay identical texts through a fully integrated synthesis path with audio-quality checks. If backbone gains fail to improve complete synthesis, report the bottleneck and limit the engine recommendation accordingly.
 
 This module defines the comparison to verify; it does not rerun or endorse historical numbers.
+
+中文版：[PROBLEM.zh.md](PROBLEM.zh.md)

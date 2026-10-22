@@ -2,6 +2,8 @@
 
 # vLLM vs TensorRT-LLM on a TTS Model's LLM Backbone
 
+**English** · [简体中文](README.zh-CN.md)
+
 **A faster LLM engine isn't a faster TTS: a component benchmark and the end-to-end budget it sits in.**
 
 在 TTS 模型 LLM 主干上对比 vLLM / TensorRT-LLM / eager 的推理性能
@@ -35,9 +37,38 @@ A reproducible benchmark comparing three inference paths for the **autoregressiv
 
 **Central tension:** Highly optimized decoding may accelerate one stage while acoustic generation, initialization or batching remains dominant. Warmup, token-count denominators and aggregation choices can also create apparent engine differences.
 
-[Full problem and verification plan](PROBLEM.md)
+[Full problem and verification plan](PROBLEM.md) · [中文](PROBLEM.zh.md)
 
 <!-- problem-framing:end -->
+
+## Architecture
+
+```mermaid
+flowchart LR
+  CK["dots.tts-base<br/>TTS checkpoint"]
+  EX["export_backbone.py<br/>llm.* to standalone Qwen2"]
+  QW["backbone_qwen2/<br/>Qwen2ForCausalLM"]
+  subgraph HARNESS["Backbone harness, 64 + 48 tokens"]
+    EA["bench_eager.py<br/>transformers StaticCache"]
+    VL["bench_vllm.py<br/>vLLM 0.17.1"]
+    TR["trtllm_bench.py<br/>TensorRT-LLM 1.3.0"]
+  end
+  RJ["results/<br/>eager · vllm · trtllm .json"]
+  subgraph PROF["dots_tts.cli --profile-inference (eager)"]
+    S1["FM DiT / ODE<br/>67.8%"]
+    S2["LLM backbone<br/>20.8%"]
+    S3["patch_encoder<br/>latent_decoder · 8.5%"]
+    S4["speaker · vocoder<br/>prefill · misc · ~3%"]
+  end
+  E2E["phase0_endtoend_breakdown.json<br/>27.36 s, RTF 3.56"]
+  CK --> EX --> QW
+  QW --> EA & VL & TR
+  EA & VL & TR --> RJ
+  CK -- "full pipeline" --> PROF
+  PROF --> E2E
+```
+
+The export path is the head-to-head benchmark: all three scripts run the same exported backbone on the same synthetic 64-token prefill plus 48 greedy decode steps (bf16, batch 1). The `dots_tts.cli --profile-inference` box is the full TTS pipeline timed by dots-tts's built-in profiler; its stages are shown with their share of end-to-end time, not in execution order.
 
 ## 1. Results 结果
 
